@@ -1,0 +1,120 @@
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+
+  background: white; 
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+
+.header-logo {
+  width: 190px;   
+  margin-left: 35px;       
+  /* height: auto; */
+  object-fit: contain;
+  margin-bottom: 13px;
+}
+
+.toggle-btn {
+  font-size: 28px;       
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  padding: 6px;
+}
+
+
+.toggle-btn:hover {
+  color: #1e40af;
+}
+
+
+/* .profile-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: #4b5563;
+} */
+
+
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+
+.welcome-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+.user-icon {
+  width: 42px;
+  height: 42px;
+  border: 2px solid #2563eb;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.welcome-label {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.profile-name {
+  font-size: 16px;
+  color: #1f7dc1;
+  font-weight: 600;
+}
+
+.welcome-text {
+  display: flex;
+  flex-direction: column;
+  /* line-height: 1.1; */
+}
+
+.info-icon {
+  color: #1f7dc1;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+
+.logout-btn {
+  padding: 8px 20px;
+  border: 2px solid #1f7dc1;
+  background: none;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #1f7dc1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  /* transition: 0.2s; */
+}
+
+.logout-btn:hover {
+  background: #4292cc;
+  color: white;
+}
+
+.logout-icon {
+  font-size: 20px;
+}

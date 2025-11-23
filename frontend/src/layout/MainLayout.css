@@ -1,0 +1,49 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  height: 86px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 25px;
+}
+
+
+.layout-body {
+  display: flex;
+  flex: 1;  
+  background: #f7f7f7;
+  margin-top: 86px;
+}
+
+
+.sidebar {
+  width: 270px;
+  background: white;
+  border-right: 1px solid #e5e7eb;
+  padding: 20px;
+}
+
+
+.layout-content {
+  flex: 1;
+  padding: 30px;
+  background: #f7f7f7;
+  overflow-y: auto;
+}
+
+
+.footer {
+  height: 50px;
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #555;
+}

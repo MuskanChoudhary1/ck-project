@@ -1,0 +1,130 @@
+.user-page {
+  padding: 10px;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+
+/* .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+} */
+
+
+.btn-section {
+  display: flex;
+  gap: 18px;
+}
+
+.add-btn {
+  background: #4292cc;
+  color: white;
+  border: none;
+  padding: 12px 14px;
+  font-size: 14px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 18px; 
+  width: auto;
+  height: auto;
+}
+
+.reset-btn {
+  background: #f2f2f2;
+  color: #333;
+  border: none;
+  padding: 10px 14px;
+  font-size: 17px;
+  /* border-radius: 6px; */
+  cursor: pointer;
+}
+
+
+.user-management-container {
+  background: #ffffff;
+  padding: 30px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+
+
+.user-table {
+  width: 100%;
+  /* box-sizing: border-box; */
+  /* border-collapse: collapse; */
+  margin-top: 20px;
+  background: white;
+  border-radius: 8px;
+  /* overflow: hidden; */
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+}
+
+.user-table th {
+  background: #f5f6f8;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: black;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.user-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: black;
+}
+
+.user-table tr:hover {
+  background: #f8fbff;
+}
+
+.roles-box {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.role-tag {
+  background: #eef3ff;
+  color: #1e40af;
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-size: 14px;
+  border: 2px solid #9aacf0;
+}
+
+.action-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  cursor: pointer;
+  color: black;
+  /* transition: 0.2s; */
+}
+
+.icon:hover {
+  color: #1e40af;
+}
+
+.resend-btn {
+  background: #eaf3ff;
+  color: #1e40af;
+  border: 2px solid #9aacf0;
+  padding: 4px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.resend-btn:hover {
+  background: #d7e9ff;
+}
