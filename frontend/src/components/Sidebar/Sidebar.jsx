@@ -7,12 +7,18 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CloudIcon from '@mui/icons-material/Cloud';
 
+import { useSidebar } from "../../context/SidebarContext";
+import { useAuth } from "../../context/AuthContext";
+
 
 function Sidebar() {
+  const { isSidebarOpen } = useSidebar();
+  const { role } = useAuth();
   return (
-    <aside className="sidebar">
+    
+    <aside className={`sidebar ${isSidebarOpen ? "open" : "closed"}`}>
 
-      <h3 className="sidebar-title">CloudBalance</h3>
+      <h3 className="sidebar-title"><span>CloudBalance</span></h3>
 
       <nav className="sidebar-nav">                                                                                                                                                                                                                                                                                                                                                                                                           
         <ul>                                                                                                                                                                                                                                                
@@ -24,31 +30,38 @@ function Sidebar() {
               }
             >
               <DashboardIcon className="sidebar-icon" />
-              Dashboard                                                                                                                                                                                                                                                             
+              <span>Dashboard</span>                                                                                                                                                                                                                                                             
             </NavLink>
           </li>
 
           {/* User Management */}
-          <li>
+          {(role === "ADMIN" || role === "READ_ONLY") && (
+            <li>
             <NavLink to="/dashboard/user-management" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
               <PeopleIcon className="sidebar-icon" />
-              User Management
+              <span>User Management</span>
             </NavLink>
           </li>
+          )}
 
           {/* Onboarding */}
-          <li>
+        
+          {(role === "ADMIN" || role === "READ_ONLY") && (
+            <li>
             <NavLink to="/dashboard/onboarding" className={({ isActive }) => isActive ? "nav-link active" : "nav-link" }>
                 <AddBoxIcon className="sidebar-icon" />
-              Onboarding
+              <span>Onboarding</span>
             </NavLink>
           </li>
+          )}
+
+        
 
           {/* Cost Explorer */}
           <li>
             <NavLink to="/dashboard/cost-explorer" className={({ isActive }) => isActive ? "nav-link active" : "nav-link" }>
                 <AttachMoneyIcon className="sidebar-icon" />
-              Cost Explorer
+              <span>Cost Explorer</span>
             </NavLink>
           </li>
 
@@ -56,7 +69,7 @@ function Sidebar() {
           <li>
             <NavLink to="/dashboard/aws-services" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
                 <CloudIcon className="sidebar-icon" />
-              AWS Services
+              <span>AWS Services</span>
             </NavLink>
           </li>
 

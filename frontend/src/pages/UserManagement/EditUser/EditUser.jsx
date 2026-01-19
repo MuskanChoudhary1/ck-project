@@ -1,46 +1,97 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./AddUser.css";
-
-import { createUser } from "../../../api/userApi";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getUserById, updateUser } from "../../../api/userApi";
 import { getAccounts } from "../../../api/accountApi";
 import { toast } from "react-toastify";
 
-function AddUser() {
+function EditUser() {
   const navigate = useNavigate();
+  const { id } = useParams();
 
   // Form state
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    password: "",
     role: "",
   });
 
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const [accountsLoaded, setAccountsLoaded] = useState(false);
+  // Dual box state
   const [availableAccounts, setAvailableAccounts] = useState([]);
   const [assignedAccounts, setAssignedAccounts] = useState([]);
+  const [accountsLoaded, setAccountsLoaded] = useState(false);
 
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const res = await getUserById(id);
+        const user = res.data;
+
+        // Set form fields
+        setForm({
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          role: user.role,
+        });
+
+        // Only if role is CUSTOMER, load accounts
+        if (user.role === "CUSTOMER") {
+          const allAccounts = await getAccounts(); // get all accounts from backend
+          const assignedIds = user.accountIds || []; // accounts already assigned to user
+          console.log("Assigned IDs:", assignedIds);
+
+          // Assigned = accounts matching assignedIds
+          const assigned = allAccounts.data.filter((acc) =>
+            assignedIds.includes(acc.id)
+          );
+
+          // Available = rest
+          const available = allAccounts.data.filter(
+            (acc) => !assignedIds.includes(acc.id)
+          );
+
+          setAssignedAccounts(assigned);
+          setAvailableAccounts(available);
+          setAccountsLoaded(true);
+        }
+      } catch (err) {
+        toast.error("Failed to load user data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadUser();
+  }, [id]);
+
+  // Form input change
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+    const { name, value } = e.target;
 
-  const handleRoleChange = async (e) => {
-    const role = e.target.value;
-    setForm({ ...form, role });
+    // If role changes
+    if (name === "role") {
+      setForm((prev) => ({ ...prev, role: value }));
 
-    if (role === "CUSTOMER" && !accountsLoaded) {
-      const res = await getAccounts();
-      setAvailableAccounts(res.data);
-      setAssignedAccounts([]);
-      setAccountsLoaded(true);
+      if (value === "CUSTOMER" && !accountsLoaded) {
+        getAccounts().then((res) => {
+          setAvailableAccounts(res.data);
+          setAssignedAccounts([]);
+          setAccountsLoaded(true);
+        });
+      } else if (value !== "CUSTOMER") {
+        setAvailableAccounts([]);
+        setAssignedAccounts([]);
+      }
+    } else {
+      setForm((prev) => ({ ...prev, [name]: value }));
     }
   };
 
+  // Dual box move functions
   const moveToAssigned = (acc) => {
     setAssignedAccounts([...assignedAccounts, acc]);
     setAvailableAccounts(availableAccounts.filter((a) => a.id !== acc.id));
@@ -58,44 +109,39 @@ function AddUser() {
     if (!form.email.trim()) newErrors.email = "Email is required";
     else if (!/\S+@\S+\.\S+/.test(form.email))
       newErrors.email = "Enter a valid email";
-    if (!form.password.trim()) newErrors.password = "Password is required";
-    else if (form.password.length < 6)
-      newErrors.password = "Password must be at least 6 characters";
     if (!form.role) newErrors.role = "Please select a role";
     if (form.role === "CUSTOMER" && assignedAccounts.length === 0)
-      newErrors.accounts = "Please select at least one account";
-
+      newErrors.accounts = "Please assign at least one account";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
-    setLoading(true);
     const payload = {
       ...form,
       accountIds:
-        form.role === "CUSTOMER" ? assignedAccounts.map((acc) => acc.id) : [],
+        form.role === "CUSTOMER" ? assignedAccounts.map((a) => a.id) : [],
     };
 
     try {
-      await createUser(payload);
-      toast.success("User created successfully");
+      await updateUser(id, payload);
+      toast.success("User updated successfully");
       navigate("/dashboard/user-management");
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      toast.error("Failed to update user");
     }
   };
 
+  if (loading) return <h2 style={{ textAlign: "center" }}>Loading...</h2>;
+
   return (
     <div className="add-user-page">
-      <h2>Add New User</h2>
+      <h2>Edit User</h2>
       <form className="form-card" onSubmit={handleSubmit}>
-        {/* Name fields */}
+        {/* Name Fields */}
         <div className="form-row">
           <div className="form-group">
             <label>First Name *</label>
@@ -103,7 +149,6 @@ function AddUser() {
               name="firstName"
               value={form.firstName}
               onChange={handleChange}
-              placeholder="Enter First Name"
             />
             {errors.firstName && <p className="error">{errors.firstName}</p>}
           </div>
@@ -113,42 +158,21 @@ function AddUser() {
               name="lastName"
               value={form.lastName}
               onChange={handleChange}
-              placeholder="Enter Last Name"
             />
             {errors.lastName && <p className="error">{errors.lastName}</p>}
           </div>
         </div>
 
-        {/* Email + Password */}
+        {/* Email + Role */}
         <div className="form-row">
           <div className="form-group">
             <label>Email *</label>
-            <input
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="Enter Email"
-            />
+            <input name="email" value={form.email} onChange={handleChange} />
             {errors.email && <p className="error">{errors.email}</p>}
           </div>
           <div className="form-group">
-            <label>Password *</label>
-            <input
-              type="password"
-              name="password"
-              value={form.password}
-              onChange={handleChange}
-              placeholder="Enter Password"
-            />
-            {errors.password && <p className="error">{errors.password}</p>}
-          </div>
-        </div>
-
-        {/* Role */}
-        <div className="form-row">
-          <div className="form-group">
             <label>Role *</label>
-            <select value={form.role} onChange={handleRoleChange}>
+            <select name="role" value={form.role} onChange={handleChange}>
               <option value="">Select Role</option>
               <option value="ADMIN">Admin</option>
               <option value="READ_ONLY">Read Only</option>
@@ -156,26 +180,21 @@ function AddUser() {
             </select>
             {errors.role && <p className="error">{errors.role}</p>}
           </div>
-
-          {/* Empty placeholder for second column */}
-          <div className="form-group"></div>
         </div>
 
-        {/* Accounts dual box */}
+        {/* Accounts dual box (like AddUser) */}
         {form.role === "CUSTOMER" && (
           <div className="account-dualbox">
-            {/* Available */}
+            {/* Available Accounts */}
             <div className="account-box">
-              <div className="box-header">Choose Account IDs to Associate</div>
+              <div className="box-header">Available Accounts</div>
               <div className="box-list">
                 {availableAccounts.map((acc) => (
                   <div key={acc.id} className="account-row">
-                    <div className="check-col">
-                      <input
-                        type="checkbox"
-                        onChange={() => moveToAssigned(acc)}
-                      />
-                    </div>
+                    <input
+                      type="checkbox"
+                      onChange={() => moveToAssigned(acc)}
+                    />
                     <div className="text-col">
                       {acc.accountId} ({acc.accountName})
                     </div>
@@ -184,19 +203,17 @@ function AddUser() {
               </div>
             </div>
 
-            {/* Assigned */}
+            {/* Assigned Accounts */}
             <div className="account-box">
-              <div className="box-header">Associated Account IDs</div>
+              <div className="box-header">Assigned Accounts</div>
               <div className="box-list">
                 {assignedAccounts.map((acc) => (
                   <div key={acc.id} className="account-row">
-                    <div className="check-col">
-                      <input
-                        type="checkbox"
-                        checked
-                        onChange={() => moveToAvailable(acc)}
-                      />
-                    </div>
+                    <input
+                      type="checkbox"
+                      checked
+                      onChange={() => moveToAvailable(acc)}
+                    />
                     <div className="text-col">
                       {acc.accountId} ({acc.accountName})
                     </div>
@@ -216,8 +233,8 @@ function AddUser() {
           >
             Cancel
           </button>
-          <button type="submit" className="save-btn" disabled={loading}>
-            {loading ? "Saving..." : "Save User"}
+          <button type="submit" className="save-btn">
+            Update User
           </button>
         </div>
       </form>
@@ -225,4 +242,4 @@ function AddUser() {
   );
 }
 
-export default AddUser;
+export default EditUser;

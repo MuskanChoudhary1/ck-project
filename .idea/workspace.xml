@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2e2a9683-d851-4727-98af-f9301a26b965" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Header/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Header/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Sidebar/Sidebar.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Sidebar/Sidebar.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Sidebar/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Sidebar/Sidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/layout/MainLayout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/layout/MainLayout.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/UserManagement/AddUser/AddUser.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/UserManagement/AddUser/AddUser.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/UserManagement/AddUser/AddUser.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/UserManagement/AddUser/AddUser.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/UserManagement/UserManagement.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/UserManagement/UserManagement.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/UserManagement/UserManagement.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/UserManagement/UserManagement.jsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="36VN9QdQrDUaaY77dpkwIawJc7Z" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/muskan-choudhary/Downloads/cloudbalance-backend"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2e2a9683-d851-4727-98af-f9301a26b965" name="Changes" comment="" />
+      <created>1765087626603</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1765087626603</updated>
+    </task>
+    <servers />
+  </component>
+</project>
